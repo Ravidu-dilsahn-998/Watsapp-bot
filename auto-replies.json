@@ -1,0 +1,23 @@
+{
+  "triggers": {
+    "hi": "👋 Hello and welcome! Type the menu command to see everything I can do.",
+    "hello": "👋 Hello! How can *IP DILSAHN* help you today?",
+    ".alive": null
+  },
+  "enabled": true,
+  "replies": [
+    {
+      "match": "good morning",
+      "reply": "🌅 Good morning! Have a productive day."
+    },
+    {
+      "match": "good night",
+      "reply": "🌙 Good night! Sleep well."
+    },
+    {
+      "match": "thank you",
+      "reply": "🙌 You are most welcome!"
+    }
+  ],
+  "updatedAt": "2026-11-21T14:43:01.915Z"
+}

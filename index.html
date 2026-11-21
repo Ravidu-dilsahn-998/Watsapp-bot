@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#050b16" />
+<title>IP DILSAHN WhatsApp Bot Panel</title>
+<style>
+  :root{
+    --bg:#050b16; --bg2:#0b1729; --card:#0f1c2e; --card2:#122238;
+    --line:#1e3a5f; --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b;
+    --cyan:#22d3ee; --indigo:#818cf8; --green:#34d399; --amber:#fbbf24; --red:#f87171; --pink:#f472b6;
+    --r:18px; --shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    min-height:100%;}
+  body{
+    background:
+      radial-gradient(900px 500px at 110% -10%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(700px 500px at -20% 110%, rgba(129,140,248,.10), transparent 60%),
+      var(--bg);
+    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:18px 16px 40px;}
+  header{display:flex;align-items:center;gap:12px;margin:6px 0 18px;}
+  .logo{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:19px;
+    background:linear-gradient(135deg,var(--cyan),var(--indigo));color:#03111c;box-shadow:0 8px 22px rgba(34,211,238,.28)}
+  .brand h1{font-size:17px;margin:0;letter-spacing:.2px}
+  .brand p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+  .pill{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;
+    padding:8px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(248,113,113,.14)}
+  .dot.on{background:var(--green);box-shadow:0 0 0 4px rgba(52,211,153,.16)}
+  .dot.pair{background:var(--amber);box-shadow:0 0 0 4px rgba(251,191,36,.16);animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);
+    border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+  .card h2{margin:0 0 12px;font-size:14px;letter-spacing:.4px;color:var(--text);display:flex;align-items:center;gap:8px}
+  .card h2 span.tag{margin-left:auto;font-size:11px;color:var(--dim);font-weight:500}
+  .ic{width:17px;height:17px;flex:0 0 17px;stroke:var(--cyan);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  button .ic{stroke:currentColor}
+
+  label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px 2px}
+  .inputRow{display:flex;gap:8px}
+  input[type=tel],input[type=password]{flex:1;width:100%;background:#0a1422;border:1px solid var(--line);color:var(--text);
+    border-radius:12px;padding:13px 14px;font-size:16px;outline:none;transition:border-color .15s}
+  input:focus{border-color:var(--cyan)}
+  button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:12px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;
+    background:linear-gradient(135deg,var(--cyan),var(--indigo));color:#04121f;white-space:nowrap;transition:transform .08s,opacity .2s}
+  button:active{transform:scale(.97)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+  button.danger{background:linear-gradient(135deg,#f87171,#fb7185);color:#2a0505}
+  .hint{font-size:11.5px;color:var(--dim);margin-top:8px;line-height:1.5}
+
+  .codeBox{margin-top:14px;display:none}
+  .codeBox.show{display:block}
+  .code{letter-spacing:6px;font-size:30px;font-weight:800;text-align:center;padding:16px 8px;border-radius:14px;
+    background:#071322;border:1px dashed var(--cyan);color:var(--cyan);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .steps{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.75}
+  .steps b{color:var(--text)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{background:#0a1422;border:1px solid var(--line);border-radius:14px;padding:12px}
+  .stat .k{font-size:10.5px;letter-spacing:.6px;color:var(--dim);text-transform:uppercase}
+  .stat .v{font-size:17px;font-weight:700;margin-top:5px;word-break:break-word}
+  .stat .v.small{font-size:13px}
+  .bar{height:6px;background:#0a1422;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+  .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--indigo));transition:width .6s}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);opacity:0;transition:.25s;
+    background:#0b1a2c;border:1px solid var(--line);color:var(--text);padding:12px 18px;border-radius:12px;
+    font-size:13px;max-width:88vw;box-shadow:var(--shadow);z-index:50}
+  .toast.show{transform:translate(-50%,0);opacity:1}
+  .toast.err{border-color:#7f1d1d}
+  .toast.ok{border-color:#065f46}
+
+  .rowline{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed rgba(30,58,95,.6);font-size:13px}
+  .rowline:last-child{border-bottom:0}
+  .rowline .l{color:var(--muted)}
+  .rowline .r{font-weight:600;text-align:right;word-break:break-word}
+
+  details.cats{margin-top:6px}
+  details.cats summary{cursor:pointer;font-size:13px;color:var(--muted);padding:8px 0}
+  .catblock{margin:8px 0 4px}
+  .catblock h4{margin:0 0 6px;font-size:12.5px;color:var(--cyan)}
+  .cmd{font-size:12px;color:var(--muted);padding:3px 0;border-bottom:1px dashed rgba(30,58,95,.35)}
+  .cmd code{color:var(--text);background:#0a1422;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11.5px}
+  footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:18px;line-height:1.7}
+  .lockRow{display:flex;gap:8px;margin-top:8px}
+  .hidden{display:none!important}
+  @media (max-width:380px){.code{font-size:25px;letter-spacing:4px}.stat .v{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">IP</div>
+    <div class="brand">
+      <h1>IP DILSAHN</h1>
+      <p>WhatsApp Bot Panel</p>
+    </div>
+    <div class="pill"><span id="dot" class="dot"></span><span id="statusText">Disconnected</span></div>
+  </header>
+
+  <!-- PAIRING -->
+  <section class="card">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 15l6-6"/><path d="M11 6.5l1.5-1.5a4 4 0 015.6 5.6L16.5 12"/><path d="M13 17.5L11.5 19A4 4 0 015.9 13.4L7.5 12"/></svg> Link WhatsApp <span class="tag" id="pairState">not paired</span></h2>
+
+    <div id="authRow" class="lockRow hidden">
+      <input type="password" id="password" placeholder="Dashboard password" autocomplete="current-password" />
+      <button class="ghost" id="authBtn">Unlock</button>
+    </div>
+
+    <label for="number">WhatsApp number with country code (digits only)</label>
+    <div class="inputRow">
+      <input type="tel" id="number" inputmode="numeric" placeholder="94712345678" autocomplete="tel" maxlength="15" />
+      <button id="pairBtn">Get Pairing Code</button>
+    </div>
+    <p class="hint">Example: <b>947XXXXXXXX</b> — no <b>+</b>, no spaces. You will receive an 8-digit code.</p>
+
+    <div class="codeBox" id="codeBox">
+      <div class="code" id="code">--------</div>
+      <ol class="steps">
+        <li>Open <b>WhatsApp</b> on your phone.</li>
+        <li>Go to <b>Settings → Linked devices</b>.</li>
+        <li>Tap <b>Link a device</b> → <b>Link with phone number</b>.</li>
+        <li>Enter the code above (it expires quickly).</li>
+      </ol>
+      <p class="hint" id="codeHint"></p>
+    </div>
+
+    <p class="hint" style="margin-top:12px">
+      Connected as <b id="brandName">IP DILSAHN</b> — the moment the session opens, the bot sends a
+      welcome/connection notification to the linked number with its status, prefix and command count.
+    </p>
+  </section>
+
+  <!-- LIVE STATUS -->
+  <section class="card">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="8" rx="1"/><rect x="17" y="13" width="3" height="3" rx="1"/></svg> Live Status <span class="tag" id="updated">—</span></h2>
+    <div class="grid">
+      <div class="stat"><div class="k">Connection</div><div class="v" id="sStatus">Disconnected</div></div>
+      <div class="stat"><div class="k">Bot number</div><div class="v small" id="sNumber">—</div></div>
+      <div class="stat"><div class="k">Commands</div><div class="v" id="sCommands">—</div></div>
+      <div class="stat"><div class="k">Prefix</div><div class="v" id="sPrefix">.</div></div>
+      <div class="stat"><div class="k">Uptime</div><div class="v small" id="sUptime">—</div></div>
+      <div class="stat"><div class="k">Memory</div><div class="v small" id="sMem">—</div></div>
+    </div>
+    <div class="bar"><i id="memBar"></i></div>
+    <div style="margin-top:14px">
+      <div class="rowline"><span class="l">Handled commands</span><span class="r" id="sHandled">0</span></div>
+      <div class="rowline"><span class="l">Messages seen</span><span class="r" id="sMsgs">0</span></div>
+      <div class="rowline"><span class="l">Authorised users</span><span class="r" id="sUsers">0</span></div>
+      <div class="rowline"><span class="l">Groups tracked</span><span class="r" id="sGroups">0</span></div>
+      <div class="rowline"><span class="l">Node / Baileys</span><span class="r" id="sNode">—</span></div>
+      <div class="rowline"><span class="l">Server time</span><span class="r" id="sTime">—</span></div>
+    </div>
+    <div id="errBox" class="hint" style="color:var(--amber)"></div>
+  </section>
+
+  <!-- ACTIONS -->
+  <section class="card">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6L18 18M18 6l-1.4 1.4M7.4 16.6L6 18"/></svg> Session</h2>
+    <div class="grid">
+      <button class="ghost" id="refreshBtn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 10-2.3 5.6"/><path d="M20 5v5h-5"/></svg> Refresh</button>
+      <button class="danger" id="resetBtn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 13h10l1-13"/></svg> Reset session</button>
+    </div>
+    <p class="hint">Reset wipes the stored credentials so you can pair a different number. Use only when needed.</p>
+  </section>
+
+  <!-- COMMANDS -->
+  <section class="card">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg> Command Catalogue <span class="tag" id="cmdTotal">—</span></h2>
+    <details class="cats"><summary>Show all categories &amp; commands</summary>
+      <div id="catList"></div>
+    </details>
+  </section>
+
+  <footer>
+    <div><b>IP DILSAHN</b> · Baileys + Express · v1.0.0</div>
+    <div>Keep this panel private. Never share your pairing code.</div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const state = { key: localStorage.getItem('dilsahn_key') || '', authRequired: false, timer: null };
+
+  const toast = (msg, kind='') => {
+    const t = $('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + kind;
+    clearTimeout(t._h);
+    t._h = setTimeout(() => { t.className = 'toast ' + kind; }, 4200);
+  };
+
+  const api = async (path, options={}) => {
+    const headers = { 'Content-Type': 'application/json', ...(options.headers||{}) };
+    if (state.key) headers['x-api-key'] = state.key;
+    const res = await fetch(path, { ...options, headers });
+    let data = {};
+    try { data = await res.json(); } catch {}
+    if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
+    return data;
+  };
+
+  const setStatus = (status, connected) => {
+    const dot = $('dot');
+    dot.className = 'dot' + (connected ? ' on' : status === 'pairing' || status === 'connecting' ? ' pair' : '');
+    const label = connected ? 'Connected' : status === 'pairing' ? 'Pairing' : status === 'connecting' ? 'Connecting' : 'Disconnected';
+    $('statusText').textContent = label;
+    $('sStatus').textContent = label;
+  };
+
+  const render = (data) => {
+    const b = data.bot || {};
+    setStatus(b.status, b.connected);
+    $('brandName').textContent = b.name || 'IP DILSAHN';
+    $('pairState').textContent = b.connected ? 'connected' : b.status;
+    $('sNumber').textContent = b.number ? '+' + b.number : '—';
+    $('sCommands').textContent = b.commands || '—';
+    $('sPrefix').textContent = b.prefix || '.';
+    $('sUptime').textContent = b.uptime || '—';
+    $('sMem').textContent = b.memory || '—';
+    $('memBar').style.width = Math.min(100, b.memPercent || 0) + '%';
+    $('sHandled').textContent = (b.commandsHandled || 0).toLocaleString();
+    $('sMsgs').textContent = (b.messagesSeen || 0).toLocaleString();
+    $('sUsers').textContent = (data.stats && data.stats.users) || 0;
+    $('sGroups').textContent = (data.stats && data.stats.groups) || 0;
+    $('sNode').textContent = b.nodeVersion + ' / 7.x';
+    $('sTime').textContent = b.time || '—';
+    $('updated').textContent = 'updated ' + new Date().toLocaleTimeString();
+    $('cmdTotal').textContent = (b.commands || 0) + ' total';
+    $('errBox').textContent = b.lastError ? 'Last error: ' + b.lastError : '';
+
+    if (b.status === 'pairing' && b.pairingCode) {
+      $('code').textContent = b.pairingCode;
+      $('codeBox').classList.add('show');
+      $('codeHint').textContent = 'Code for +' + (b.pairingNumber || '') + ' — enter it now under Linked devices.';
+    }
+    if (b.connected && $('codeBox').classList.contains('show')) {
+      $('codeBox').classList.remove('show');
+      toast('Bot connected successfully', 'ok');
+    }
+    if (data.authRequired) {
+      $('authRow').classList.toggle('hidden', !!state.key);
+    }
+  };
+
+  const refresh = async () => {
+    try {
+      const data = await api('/api/status');
+      state.authRequired = data.authRequired;
+      render(data);
+    } catch (err) {
+      $('errBox').textContent = err.message;
+    }
+  };
+
+  const loadCommands = async () => {
+    try {
+      const data = await api('/api/commands');
+      const list = $('catList');
+      list.innerHTML = '';
+      for (const [cat, payload] of Object.entries(data.categories || {})) {
+        const block = document.createElement('div');
+        block.className = 'catblock';
+        const h = document.createElement('h4');
+        h.textContent = (payload.meta.emoji || '📁') + ' ' + (payload.meta.title || cat) + ' (' + payload.commands.length + ')';
+        block.appendChild(h);
+        payload.commands.forEach((c) => {
+          const row = document.createElement('div');
+          row.className = 'cmd';
+          const code = document.createElement('code');
+          code.textContent = '.' + c.name;
+          row.appendChild(code);
+          row.appendChild(document.createTextNode(' ' + c.description));
+          block.appendChild(row);
+        });
+        list.appendChild(block);
+      }
+    } catch (err) {
+      toast(err.message, 'err');
+    }
+  };
+
+  const pair = async () => {
+    const btn = $('pairBtn');
+    const raw = $('number').value.trim();
+    const number = raw.replace(/[^0-9]/g, '');
+    if (number.length < 8) return toast('Enter the number with country code, e.g. 94712345678', 'err');
+    btn.disabled = true;
+    btn.textContent = 'Working…';
+    try {
+      const data = await api('/api/pair', { method: 'POST', body: JSON.stringify({ number }) });
+      $('code').textContent = data.code;
+      $('codeBox').classList.add('show');
+      $('codeHint').textContent = 'Code for +' + data.number + ' — open WhatsApp now and enter it.';
+      toast('Pairing code generated', 'ok');
+      refresh();
+    } catch (err) {
+      toast(err.message, 'err');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Get Pairing Code';
+    }
+  };
+
+  const reset = async () => {
+    if (!confirm('Reset the WhatsApp session? The bot will disconnect until you pair again.')) return;
+    try {
+      await api('/api/logout', { method: 'POST', body: '{}' });
+      toast('Session cleared. Pair again.', 'ok');
+      $('codeBox').classList.remove('show');
+      refresh();
+    } catch (err) {
+      toast(err.message, 'err');
+    }
+  };
+
+  const unlock = async () => {
+    const pwd = $('password').value;
+    if (!pwd) return toast('Enter the dashboard password', 'err');
+    state.key = pwd;
+    try {
+      await api('/api/auth', { method: 'POST', body: '{}' });
+      localStorage.setItem('dilsahn_key', pwd);
+      $('authRow').classList.add('hidden');
+      toast('Unlocked', 'ok');
+      refresh();
+      loadCommands();
+    } catch (err) {
+      state.key = '';
+      toast('Wrong password', 'err');
+    }
+  };
+
+  $('pairBtn').addEventListener('click', pair);
+  $('number').addEventListener('keydown', (e) => { if (e.key === 'Enter') pair(); });
+  $('refreshBtn').addEventListener('click', () => { refresh(); loadCommands(); });
+  $('resetBtn').addEventListener('click', reset);
+  $('authBtn').addEventListener('click', unlock);
+  $('password').addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
+
+  refresh();
+  loadCommands();
+  state.timer = setInterval(refresh, 4000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refresh();
+  });
+})();
+</script>
+</body>
+</html>

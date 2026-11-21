@@ -1,0 +1,39 @@
+{
+  "botName": "IP DILSAHN",
+  "prefix": ".",
+  "ownerNumbers": [],
+  "ownerName": "IP DILSAHN Owner",
+  "public": true,
+  "features": {
+    "autoReply": true,
+    "autoRead": false,
+    "autoViewStatus": false,
+    "autoReactStatus": false,
+    "antiLink": false,
+    "antiSpam": false,
+    "antiDelete": false,
+    "welcome": true,
+    "goodbye": true,
+    "antiCall": false,
+    "keepOnline": false,
+    "autoSticker": false,
+    "chatBot": false
+  },
+  "moderation": {
+    "antiLinkAction": "delete",
+    "linkWhitelist": [
+      "chat.whatsapp.com"
+    ],
+    "warnLimit": 3
+  },
+  "messages": {
+    "welcome": "👋 Welcome @user to *@group*!\n\nYou are member #@count.\nEnjoy your stay 🎉",
+    "goodbye": "😢 Goodbye @user, we will miss you!"
+  },
+  "presence": {
+    "status": "available"
+  },
+  "protectedJids": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-11-21T14:43:01.915Z"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ip-dilsahn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IP DILSAHN - production-ready WhatsApp bot (Baileys + Express dashboard)",
+  "type": "module",
+  "main": "index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "check": "node scripts/check.js",
+    "commands": "node scripts/count.js"
+  },
+  "keywords": ["whatsapp", "bot", "baileys", "pairing-code", "ip-dilsahn"],
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "7.0.0-rc14",
+    "axios": "^1.8.4",
+    "express": "^4.21.2",
+    "ffmpeg-static": "^5.2.0",
+    "pino": "^9.6.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0",
+    "sharp": "^0.33.5",
+    "youtube-dl-exec": "^3.0.16"
+  }
+}

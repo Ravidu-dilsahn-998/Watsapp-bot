@@ -1,0 +1,10 @@
+{
+  "status": "pairing",
+  "connected": false,
+  "botNumber": "",
+  "botJid": "",
+  "pushName": "",
+  "connectedAt": null,
+  "lastError": "code undefined",
+  "updatedAt": "2026-11-21T14:43:02.281Z"
+}
